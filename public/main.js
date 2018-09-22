@@ -18,6 +18,7 @@ function onLocationFound(e) {
 map.on('locationfound', onLocationFound);
 
 socket.on('position-carpuling', function (data) {
+	console.log(data.location);
 	L.circle(data.location, data.radius).addTo(map);
 });
 
