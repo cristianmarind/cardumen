@@ -5,14 +5,7 @@ var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 var aux = true;
-map.on('locationfound', onLocationFound);
-map.locate({setView: true, maxZoom: 16});
-var timer = setInterval(function(){
-	if(aux){
-		clearInterval(timer);
-	}
-	map.locate({setView: false, maxZoom: 16});
-}, 3000)
+
 function onLocationFound(e) {
 	var radius = 10;
 	console.log(e.latlng);
@@ -22,13 +15,14 @@ function onLocationFound(e) {
 
 map.on('locationfound', onLocationFound);
 
+map.locate({setView: true, maxZoom: 16});
+var timer = setInterval(function(){
+	if(aux){
+		clearInterval(timer);
+	}
+	map.locate({setView: false, maxZoom: 16});
+}, 3000)
+
 socket.on('position-carpuling', function (data) {
 	L.circle(data.location, data.radius).addTo(map);
 });
-
-/*
-socket.on('new-word', function (data) {
-	renderWord(data);
-});
-
-socket.emit('sent-story', part);*/
