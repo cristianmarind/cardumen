@@ -4,14 +4,20 @@ var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{
 	maxZoom: 19,
 	attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
-
+var aux = true;
 map.on('locationfound', onLocationFound);
-setInterval(function(){
-	map.locate({setView: true, maxZoom: 16});
+map.locate({setView: true, maxZoom: 16});
+var timer = setInterval(function(){
+	if(aux){
+		clearInterval(timer);
+	}
+	map.locate({setView: false, maxZoom: 16});
 }, 3000)
 function onLocationFound(e) {
-    var radius = e.accuracy / 5;
+	var radius = 10;
+	console.log(e.latlng);
 	socket.emit('new-carpuling', {location: e.latlng, radius: radius});
+	aux = false;
 }
 
 map.on('locationfound', onLocationFound);

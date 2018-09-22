@@ -4,7 +4,7 @@ var bodyParser = require('body-parser');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
-const port = process.env.PORT || 8080;
+const port = process.env.PORT || 8081;
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
