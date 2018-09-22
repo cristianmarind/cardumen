@@ -8,16 +8,15 @@ var OpenStreetMap_Mapnik = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{
 map.on('locationfound', onLocationFound);
 setInterval(function(){
 	map.locate({setView: true, maxZoom: 16});
-}, 5000)
+}, 3000)
 function onLocationFound(e) {
-    var radius = e.accuracy / 4;
+    var radius = e.accuracy / 5;
 	socket.emit('new-carpuling', {location: e.latlng, radius: radius});
 }
 
 map.on('locationfound', onLocationFound);
 
 socket.on('position-carpuling', function (data) {
-	console.log(data.location);
 	L.circle(data.location, data.radius).addTo(map);
 });
 
