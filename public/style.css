@@ -1,7 +1,9 @@
 .tooltipped:hover{
     background:#efefef;
 }
-
+#map{
+    height: 50vh;
+}
 .word-input{
     border-color:#fff !important;
 }
