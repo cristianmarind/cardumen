@@ -9,8 +9,10 @@ map.on('locationfound', onLocationFound);
 
 
 function onLocationFound(e) {
-    var radius = e.accuracy / 2;
-	socket.emit('new-carpuling', {location: e.latlng, radius: radius});
+    var radius = e.accuracy / 4;
+	setInterval(function(){
+		socket.emit('new-carpuling', {location: e.latlng, radius: radius});
+	}, 5000)
 }
 
 map.on('locationfound', onLocationFound);
