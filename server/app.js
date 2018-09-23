@@ -4,7 +4,9 @@ var bodyParser = require('body-parser');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io').listen(server);
-const port = process.env.PORT || 8081;
+const port = process.env.PORT || 8080;
+
+var coutUser = 0;
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -23,10 +25,10 @@ app.get('', function (req, res) {
 
 io.on('connection', function (socket) {
     console.log('Alguien se ha conectado con Sockets');
-    /*socket.emit('story', storyParts);
-    socket.emit('new-word', nowWord);*/
-    socket.on('new-carpuling', function (data) {
-        io.sockets.emit('position-carpuling', data);
+    socket.emit('identify', coutUser);
+    coutUser += 1;
+    socket.on('new-cardumen', function (data) {
+        io.sockets.emit('position-cardumen', data);
     });
 });
 
