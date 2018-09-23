@@ -39,6 +39,8 @@ socket.on('position-cardumen', function (data) {
 
 socket.on('delete-cardumen', function (data) {
 	data.forEach(element => {
-		map.removeLayer(cardumenes[element.toString()])
+		if(cardumenes[element.toString()] !== undefined){
+			map.removeLayer(cardumenes[element.toString()])
+		}
 	});
 });
