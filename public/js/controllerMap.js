@@ -9,7 +9,7 @@ var icon = L.icon({
     iconUrl: imageUrl,
     iconSize:     [30, 30], // size of the icon
 });
-var cardumenes = [];
+var cardumenes = {};
 var id = null;
 
 function onLocationFound(e) {
@@ -31,13 +31,14 @@ socket.on('identify', function (data) {/*Codigo unico Se ejecuta al inicio*/
 });
 
 socket.on('position-cardumen', function (data) {
-	if(cardumenes[data.id] !== undefined || data.id == null){
-		/*map.removeLayer(cardumenes[data.id].shape)
-		cardumenes[data.id].shape = L.marker(data.location, {icon: icon}).addTo(map);*/
-	}else{
-		cardumenes.push({
-			key:   data.id,
-			value: L.marker(data.location, {icon: icon}).addTo(map)
-		});
+	if(cardumenes[data.id.toString()] !== undefined){
+		map.removeLayer(cardumenes[data.id.toString()]);
 	}
+	cardumenes[data.id.toString()] = L.marker(data.location, {icon: icon}).addTo(map);
+});
+
+socket.on('delete-cardumen', function (data) {
+	data.forEach(element => {
+		map.removeLayer(cardumenes[element.toString()])
+	});
 });
